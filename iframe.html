@@ -1,0 +1,120 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>iFrame</title>
+<style>
+body {font-size:14px; font-family:Arial, Helvetica, sans-serif; background:#f8f8f8;}
+
+.hidden {display:none; visibility:hidden;}
+
+#iframe-container {padding:25px 10px 10px; background:#CCC; width:300px; height:200px; position:relative; border:1px solid #999; cursor:move;}
+#iframe-container #title {position:absolute; padding:5px; top:0; left:0; right:0; text-align:center;}
+#iframe-container iframe {width:100%; height:100%; border:1px solid #999; background:#FFF;}
+
+#devices {padding:5px; background:#F93;}
+#devices .ui-selecting { background: #FECA40; }
+#devices .ui-selected { background: #F39814; color: white; }
+#devices { list-style-type: none; margin: 0; padding: 0; display:table;}
+#devices li { margin: 3px; padding: 0.5em; display:table-cell; border:3px solid #999; cursor:pointer; background:#EEE; font-size:0.9em;}
+</style>
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
+<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+<script src="https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+<script>
+	$(function() {
+		$( "#iframe-container" ).draggable().resizable();
+		$( "#devices li" ).click(function(){
+			changeDevice(this);
+		});
+		// Show first device on load
+		changeDevice($( "#devices li.default" ));
+	});
+	
+	function changeDevice(e) {
+		// Show Selected the Tab
+		$( "#devices li" ).removeClass("ui-selected");
+		$(e).addClass("ui-selected");
+		
+		// Get Width and Height
+		var width = $(e).attr("device-width");
+		var height = $(e).attr("device-height");
+		console.log(width + ' x ' + height);
+		
+		// Change iFrame container size
+		$( "#iframe-container" ).animate({'width':width, 'height':height});
+		var src = document.getElementById('input-src').value;
+		var html = src + "("+ width +"x"+ height +")";
+		$( "#title" ).html(html);
+	}
+</script>
+</head>
+
+<body>
+<form>
+<ol id="devices">
+  <li device-width="320" device-height="480" class="default">iPod Touch / iPhone 3 &amp; Below</li>
+  <li device-width="640" device-height="960">iPhone 4/4S</li>
+  <li device-width="640" device-height="1136">iPhone 5/5S</li>
+  <li device-width="768" device-height="1024">iPad/iPad 2/iPad Mini</li>
+  <li device-width="1536" device-height="2048">iPad 3/iPad 4</li>
+  <li device-width="480" device-height="800">Google Nexus One</li>
+  <li device-width="480" device-height="800">Samsung Galaxy S/Galaxy SII/Galaxy S III Mini</li>
+  <li device-width="720" device-height="1280">Samsung Galaxy SIII</li>
+  <li device-width="1080" device-height="1920">Samsung Galaxy S4</li>
+  <li device-width="640" device-height="360">YouTube (S)</li>
+  <li device-width="854" device-height="480">YouTube (M)</li>
+</ol>
+    <input type="text" placeholder="Styles" id="input-style" onblur="changeStyle();" onchange="changeStyle();" />
+    <input type="text" placeholder="http://" id="input-src" onblur="changeSrc();" onchange="changeStyle();" />
+    <div class="hidden">
+    <input type="button" value="width:500px; height:300px; position:absolute; bottom:20px; right:20px;" onclick="setStyle(this);" />
+    <input type="button" value="http://www.code-dude.com" onclick="setSrc(this);" />
+    <input type="button" value="Reset" onclick="resetIframe();" />
+    </div>
+</form>
+
+<div id="iframe-container">
+	<div id="title">Title</div>
+    <iframe frameborder="1" id="target-iframe"></iframe>
+</div>
+
+<script>
+function resetIframe() {
+	document.getElementById('input-style').value = '';
+	document.getElementById('input-src').value = '';
+	changeStyle();
+	changeSrc();
+}
+function setStyle(e) {
+	var style = e.value;
+	var input_box = document.getElementById('input-style');
+	input_box.value = style;
+	changeStyle();
+}
+function setSrc(e) {
+	var src = e.value;
+	var input_box = document.getElementById('input-src');
+	input_box.value = src;
+	changeSrc();
+}
+function changeStyle() {
+	var style = document.getElementById('input-style').value;
+	var iframe = document.getElementById('target-iframe');
+	var iframeStyle = iframe.getAttribute('style');
+	if ( iframeStyle != style ) {
+		iframe.setAttribute('style',style);
+	}
+}
+function changeSrc() {
+	var src = document.getElementById('input-src').value;
+	var iframe = document.getElementById('target-iframe');
+	var iframeSrc = iframe.getAttribute('src');
+	if ( iframeSrc != src ) {
+		iframe.setAttribute('src',src);
+	}
+}
+</script>
+
+</body>
+</html>
