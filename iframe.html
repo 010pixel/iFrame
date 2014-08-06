@@ -52,25 +52,26 @@ body {font-size:14px; font-family:Arial, Helvetica, sans-serif; background:#f8f8
 
 <body>
 <form>
-<ol id="devices">
-  <li device-width="320" device-height="480" class="default">iPod Touch / iPhone 3 &amp; Below</li>
-  <li device-width="640" device-height="960">iPhone 4/4S</li>
-  <li device-width="640" device-height="1136">iPhone 5/5S</li>
-  <li device-width="768" device-height="1024">iPad/iPad 2/iPad Mini</li>
-  <li device-width="1536" device-height="2048">iPad 3/iPad 4</li>
-  <li device-width="480" device-height="800">Google Nexus One</li>
-  <li device-width="480" device-height="800">Samsung Galaxy S/Galaxy SII/Galaxy S III Mini</li>
-  <li device-width="720" device-height="1280">Samsung Galaxy SIII</li>
-  <li device-width="1080" device-height="1920">Samsung Galaxy S4</li>
-  <li device-width="640" device-height="360">YouTube (S)</li>
-  <li device-width="854" device-height="480">YouTube (M)</li>
-</ol>
+    <ol id="devices">
+      <li device-width="320" device-height="480" class="default">iPod Touch / iPhone 3 &amp; Below</li>
+      <li device-width="640" device-height="960">iPhone 4/4S</li>
+      <li device-width="640" device-height="1136">iPhone 5/5S</li>
+      <li device-width="768" device-height="1024">iPad/iPad 2/iPad Mini</li>
+      <li device-width="1536" device-height="2048">iPad 3/iPad 4</li>
+      <li device-width="480" device-height="800">Google Nexus One</li>
+      <li device-width="480" device-height="800">Samsung Galaxy S/Galaxy SII/Galaxy S III Mini</li>
+      <li device-width="720" device-height="1280">Samsung Galaxy SIII</li>
+      <li device-width="1080" device-height="1920">Samsung Galaxy S4</li>
+      <li device-width="640" device-height="360">YouTube (S)</li>
+      <li device-width="854" device-height="480">YouTube (M)</li>
+    </ol>
     <input type="text" placeholder="Styles" id="input-style" onblur="changeStyle();" onchange="changeStyle();" />
-    <input type="text" placeholder="http://" id="input-src" onblur="changeSrc();" onchange="changeStyle();" />
+    <input type="text" placeholder="http://" id="input-src" />
+    <input type="button" value="Submit" onclick="submitForm();" />
+    <input type="button" value="Reset" onclick="resetIframe();" />
     <div class="hidden">
     <input type="button" value="width:500px; height:300px; position:absolute; bottom:20px; right:20px;" onclick="setStyle(this);" />
     <input type="button" value="http://www.code-dude.com" onclick="setSrc(this);" />
-    <input type="button" value="Reset" onclick="resetIframe();" />
     </div>
 </form>
 
@@ -80,6 +81,10 @@ body {font-size:14px; font-family:Arial, Helvetica, sans-serif; background:#f8f8
 </div>
 
 <script>
+function submitForm() {
+	changeStyle();
+	changeSrc();
+}
 function resetIframe() {
 	document.getElementById('input-style').value = '';
 	document.getElementById('input-src').value = '';
